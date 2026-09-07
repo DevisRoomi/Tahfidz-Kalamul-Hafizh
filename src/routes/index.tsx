@@ -159,7 +159,13 @@ function Dashboard() {
               <BarChart data={perBulan}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                 <XAxis dataKey="bulan" fontSize={12} stroke="var(--muted-foreground)" />
-                <YAxis fontSize={12} stroke="var(--muted-foreground)" />
+                <YAxis yAxisId="kiri" fontSize={12} stroke="var(--muted-foreground)" />
+                <YAxis
+                  yAxisId="kanan"
+                  orientation="right"
+                  fontSize={12}
+                  stroke="var(--muted-foreground)"
+                />
                 <Tooltip
                   contentStyle={{
                     background: "var(--card)",
@@ -169,8 +175,20 @@ function Dashboard() {
                   }}
                 />
                 <Legend />
-                <Bar dataKey="setoran" name="Jumlah setoran" fill="var(--chart-1)" radius={6} />
-                <Bar dataKey="ayat" name="Jumlah ayat" fill="var(--chart-2)" radius={6} />
+                <Bar
+                  yAxisId="kiri"
+                  dataKey="setoran"
+                  name="Jumlah setoran"
+                  fill="var(--chart-1)"
+                  radius={6}
+                />
+                <Bar
+                  yAxisId="kanan"
+                  dataKey="ayat"
+                  name="Jumlah ayat"
+                  fill="var(--chart-2)"
+                  radius={6}
+                />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
