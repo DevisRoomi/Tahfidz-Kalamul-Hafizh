@@ -92,18 +92,30 @@ export async function fetchSantri(): Promise<Santri[]> {
   return data ?? [];
 }
 
+// PostgREST membatasi 1000 baris per permintaan, jadi ambil bertahap sampai habis.
 export async function fetchSetoran(filter?: {
   from?: string;
   to?: string;
   santriId?: string;
 }): Promise<Setoran[]> {
-  let q = client.from("setoran").select("*").order("tanggal", { ascending: false });
-  if (filter?.from) q = q.gte("tanggal", filter.from);
-  if (filter?.to) q = q.lte("tanggal", filter.to);
-  if (filter?.santriId) q = q.eq("santri_id", filter.santriId);
-  const { data, error } = await q.limit(20000);
-  if (error) throw error;
-  return data ?? [];
+  const ukuran = 1000;
+  const semua: Setoran[] = [];
+  for (let offset = 0; offset < 100000; offset += ukuran) {
+    let q = client
+      .from("setoran")
+      .select("*")
+      .order("tanggal", { ascending: false })
+      .order("id", { ascending: true });
+    if (filter?.from) q = q.gte("tanggal", filter.from);
+    if (filter?.to) q = q.lte("tanggal", filter.to);
+    if (filter?.santriId) q = q.eq("santri_id", filter.santriId);
+    const { data, error } = await q.range(offset, offset + ukuran - 1);
+    if (error) throw error;
+    const batch: Setoran[] = data ?? [];
+    semua.push(...batch);
+    if (batch.length < ukuran) break;
+  }
+  return semua;
 }
 
 export async function fetchPengaturan(): Promise<Pengaturan> {
