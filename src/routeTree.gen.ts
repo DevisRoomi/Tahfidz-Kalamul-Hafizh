@@ -10,33 +10,91 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LaporanRouteImport } from './routes/laporan'
+import { Route as PengaturanRouteImport } from './routes/pengaturan'
+import { Route as SantriRouteImport } from './routes/santri'
+import { Route as SetoranRouteImport } from './routes/setoran'
+import { Route as UstadzRouteImport } from './routes/ustadz'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LaporanRoute = LaporanRouteImport.update({
+  id: '/laporan',
+  path: '/laporan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PengaturanRoute = PengaturanRouteImport.update({
+  id: '/pengaturan',
+  path: '/pengaturan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SantriRoute = SantriRouteImport.update({
+  id: '/santri',
+  path: '/santri',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SetoranRoute = SetoranRouteImport.update({
+  id: '/setoran',
+  path: '/setoran',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UstadzRoute = UstadzRouteImport.update({
+  id: '/ustadz',
+  path: '/ustadz',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/laporan': typeof LaporanRoute
+  '/pengaturan': typeof PengaturanRoute
+  '/santri': typeof SantriRoute
+  '/setoran': typeof SetoranRoute
+  '/ustadz': typeof UstadzRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/laporan': typeof LaporanRoute
+  '/pengaturan': typeof PengaturanRoute
+  '/santri': typeof SantriRoute
+  '/setoran': typeof SetoranRoute
+  '/ustadz': typeof UstadzRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/laporan': typeof LaporanRoute
+  '/pengaturan': typeof PengaturanRoute
+  '/santri': typeof SantriRoute
+  '/setoran': typeof SetoranRoute
+  '/ustadz': typeof UstadzRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/laporan' | '/pengaturan' | '/santri' | '/setoran' | '/ustadz'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/laporan' | '/pengaturan' | '/santri' | '/setoran' | '/ustadz'
+  id:
+    | '__root__'
+    | '/'
+    | '/laporan'
+    | '/pengaturan'
+    | '/santri'
+    | '/setoran'
+    | '/ustadz'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LaporanRoute: typeof LaporanRoute
+  PengaturanRoute: typeof PengaturanRoute
+  SantriRoute: typeof SantriRoute
+  SetoranRoute: typeof SetoranRoute
+  UstadzRoute: typeof UstadzRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +106,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/laporan': {
+      id: '/laporan'
+      path: '/laporan'
+      fullPath: '/laporan'
+      preLoaderRoute: typeof LaporanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pengaturan': {
+      id: '/pengaturan'
+      path: '/pengaturan'
+      fullPath: '/pengaturan'
+      preLoaderRoute: typeof PengaturanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/santri': {
+      id: '/santri'
+      path: '/santri'
+      fullPath: '/santri'
+      preLoaderRoute: typeof SantriRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/setoran': {
+      id: '/setoran'
+      path: '/setoran'
+      fullPath: '/setoran'
+      preLoaderRoute: typeof SetoranRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ustadz': {
+      id: '/ustadz'
+      path: '/ustadz'
+      fullPath: '/ustadz'
+      preLoaderRoute: typeof UstadzRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LaporanRoute: LaporanRoute,
+  PengaturanRoute: PengaturanRoute,
+  SantriRoute: SantriRoute,
+  SetoranRoute: SetoranRoute,
+  UstadzRoute: UstadzRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
